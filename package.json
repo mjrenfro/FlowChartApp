@@ -1,0 +1,21 @@
+{
+  "name": "formidableform",
+  "version": "1.0.0",
+  "description": "input, save, retrieve...that's all",
+  "main": "server.js",
+  "scripts": {
+    "test": "node server.js",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "basic",
+    "test"
+  ],
+  "author": "Short Chort",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.16.0",
+    "express": "^4.14.0",
+    "formidable": "^1.1.1"
+  }
+}

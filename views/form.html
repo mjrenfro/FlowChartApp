@@ -1,0 +1,68 @@
+<html>
+  <body>
+    <h2>Enter</h2>
+    <form action="" method ="post">
+      <fieldset>
+        <label for "key">Key: </label>
+        <input type="text" id="key" name="key" placeholder=""/>
+        <br/>
+        <label for "value">Value: </label>
+        <input type="text" id="value" name ="value" placeholder=""/>
+        <br/>
+        <button formaction="/enter" type="submit" onclick="update_hashed('something')">-->[...]</button>
+        <div id="hashed_stuff">
+          <br/>
+          <br/>
+          <label for "hashed">Hashed Value: </label>
+          <input style="width: 475px;"  readonly type="text"   name="hashed" value = {{hashed}}>
+        </div>
+
+
+
+      </fieldset>
+    </form>
+    <h2>Search &amp; Update</h2>
+    <form action= "" method ="post">
+      <fieldset>
+        <label for "search_value">Key: </label>
+        <input type="text" id="name" name="search_value" placeholder=""/>
+        <br/>
+        <button formaction="/search" type="submit" onclick="update_retrieval('something')"><--[...]</button>
+        <div id="retrieval_stuff">
+          <br/>
+          <br/>
+          <label for "found">Found Value: </label>
+          <input type="text" name="found" value={{previous}}>
+          <br/>
+          <button formaction="/update" type="submit">-->[+/-...]</button>
+        </div>
+        </fieldset>
+
+
+    </form>
+  <!-- <script>
+    var hash="hashed_stuff";
+    var ret="retrieval_stuff";
+    (function(){
+      update_hashed("none");
+      update_retrieval("none");
+    })();
+    function update_hashed(display){
+
+      toggle_visibility(hash, display);
+    };
+    function update_retrieval(display){
+
+      toggle_visibility(ret, display);
+    };
+    //Got from SO
+    function toggle_visibility(eleID, display){
+      (function(style, display){
+        console.log(display);
+        style.display=display=== "something" ? "something" : "none";
+      })(document.getElementById(eleID).style, display);
+    };
+
+  </script> -->
+  </body>
+</html>

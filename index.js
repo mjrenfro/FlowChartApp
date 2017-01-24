@@ -4,6 +4,9 @@ var router=express.Router();
 var mongo=require('mongodb');
 var fs = require('fs');
 var mustache=require('mustache');
+var Session=require("./session");
+//session for tracking info between different routes
+var current_session=new Session("","");
 
 const crypto=require('crypto');
 
@@ -15,29 +18,46 @@ var insertString= function(db, key,value, hash_string, callback){
     "word":value,
     "hashed":hash_string
   });
-
 };
+
 var searchString=function(db, search_string,  return_val, res,callback){
+  current_session.key=search_string;
   const coll=db.get('awesome_words');
   coll.find({
     "key":search_string
   }, "word").then((stuff_found)=>{
-      html_render({previous:stuff_found[0]["word"]}, res);
+      var found_value=stuff_found[0]["word"]
+      current_session.value=found_value;
+      html_render({previous:found_value}, res);
   });
-
 };
 
-//TODO: argg...need to learn how template rendering works
+//TODO: is callback really needed?
+var updateString=function(db, new_string, res, callback){
+  const coll=db.get('awesome_words');
+  coll.update({key:current_session.key},{$set:{word:new_string}}).then(()=>{
+    current_session.value=new_string;
+    html_render({previous:""},res);
+  });
+
+}
+
 var html_render=function(bundle, res){
 
-  var page=fs.readFileSync('form.html', "utf8");
-  var html=mustache.to_html(page, bundle);
-  res.send(html);
+  res.render('form',bundle);
 
 }
 
 router.get('/', function(req, res){
-    res.sendFile(__dirname+ '/form.html');
+    res.render('form');
+});
+
+router.post('/update', function(req,res){
+  var new_word=req.body.found;
+  updateString(req.db, new_word, res, function(){
+    req.db.close();
+  });
+
 });
 
 router.post('/enter', function (req, res){

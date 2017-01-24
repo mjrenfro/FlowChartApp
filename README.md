@@ -1,4 +1,4 @@
-#FlowChartApp
+#nodeMyAdmin
 
 __*Simple Mongo Setup Reminder*__
 

@@ -5,7 +5,7 @@ __*Simple Mongo Setup Reminder*__
 * Get Mongo server running
  * sudo mongod
 
-* Shell running
+* Shell Running
  * mongo
 
 __*Starting NodeJS App*__

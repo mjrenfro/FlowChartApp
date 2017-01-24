@@ -2,6 +2,8 @@
 
 Simple administration tool written in node.js to manange databases in MongoDB.
 
+## !In very early development stage! ##
+
 __*Simple Mongo Setup Reminder*__
 
 * Get Mongo server running

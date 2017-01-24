@@ -1,5 +1,7 @@
 #nodeMyAdmin
 
+Administration tool written in node.js to manange databases in MongoDB.
+
 __*Simple Mongo Setup Reminder*__
 
 * Get Mongo server running

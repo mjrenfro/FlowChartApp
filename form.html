@@ -2,16 +2,29 @@
   <body>
     <form action="" method ="post">
       <fieldset>
-        <label for "test_value">Value:</label>
-        <input type="text" id="name" name="test_value" placeholder="Enter anything"/>
+        <label for "input_value">Input:</label>
+        <input type="text" id="key" name="key" placeholder="Enter key"/>
         <br/>
-        <input type="submit" value="Go!"/>
+        <input type="text" id="value" name ="value" placeholder="Enter value"/>
+        <button formaction="/enter" type="submit">Enter</button>
+      </fieldset>
+    </form>
+    <form action= "" method ="post">
+      <fieldset>
+        <label for "search_value">Search:</label>
+        <input type="text" id="name" name="search_value" placeholder="Enter previous key"/>
+        <br/>
+        <button formaction="/search" type="submit">Search</button>
       </fieldset>
     </form>
     <ul>
 
-    <li>Shifted value:{{shifted}}</li>
+    <li>Shifted:{{hashed}}</li>
+    <li>Found value: {{previous}}</li>
     </ul>
+    <ul>
+
+
 
   </body>
 </html>

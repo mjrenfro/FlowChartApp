@@ -2,18 +2,18 @@
 
 __*Simple Mongo Setup Reminder*__
 
-*Get Mongo server running
- sudo mongod
+* Get Mongo server running
+ * sudo mongod
 
-*Shell running
- mongo
+* Shell running
+ * mongo
 
 __*Starting NodeJS App*__
 
-*node server.js
+* node server.js
 
-*If want a easy way to restart app after changes*
+* *If want a easy way to restart app after changes*
 
-*npm install nodemon
+* npm install nodemon
 
-*nodemon server
+* nodemon server

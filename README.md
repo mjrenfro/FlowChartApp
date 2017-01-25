@@ -1,6 +1,6 @@
 #nodeMyAdmin
 
-Simple administration tool written in node.js to manange databases in MongoDB.
+Simple administration tool written in node.js to manage databases in MongoDB.
 
 ## ! In very early development stage ! ##
 

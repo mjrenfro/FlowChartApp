@@ -6,8 +6,6 @@ Simple administration tool written in node.js to manange databases in MongoDB.
 
 ### See what's to come [here](https://trello.com/b/Fsn54yaG/nodemyadmin) ###
 
-### Suggestions ###
-
 Feel free to add suggestions or identify issues in GitHub's Issues manager
 
 __*Simple Mongo Setup Reminder*__

@@ -8,6 +8,11 @@ var Session=require("./session");
 //session for tracking info between different routes
 var current_session=new Session("","");
 
+//for populating the list of collections
+var MongoClient=require('mongodb').MongoClient;
+var assert=require('assert');
+var url='mongodb://localhost:27017/test';
+
 const crypto=require('crypto');
 
 var insertString= function(db, key,value, hash_string, callback){
@@ -42,14 +47,34 @@ var updateString=function(db, new_string, res, callback){
 
 }
 
+//should return only names or the entire obj
+function get_collections(db, res,callback){
+  name_colls=[];
+
+  MongoClient.connect(url,function(err, db){
+    assert.equal(null, err);
+    db.listCollections().toArray(function(err,collInfos){
+      for (let coll of collInfos){
+        console.log("adding names");
+        name_colls.push(coll['name']);
+      }
+            res.render('main', {collections:name_colls});
+    });
+
+  });
+}
+
 var html_render=function(bundle, res){
-
-  res.render('form',bundle);
-
+  res.render('crud',bundle);
 }
 
 router.get('/', function(req, res){
-    res.render('form');
+    list_names=get_collections(req.db,res, function(){
+      // console.log("router: ", name_colls);
+      req.db.close();
+      // res.render('main', {collections:name_colls});
+    });
+
 });
 
 router.post('/update', function(req,res){

@@ -6,17 +6,20 @@ var fs = require('fs');
 var mustache=require('mustache');
 var Session=require("./session");
 //session for tracking info between different routes
-var current_session=new Session("","");
+var current_session=new Session("","","");
+
+var MongoClient = require('mongodb').MongoClient
+  , assert = require('assert');
 
 //for populating the list of collections
-var MongoClient=require('mongodb').MongoClient;
+
 var assert=require('assert');
 var url='mongodb://localhost:27017/test';
 
 const crypto=require('crypto');
 
 var insertString= function(db, key,value, hash_string, callback){
-  const coll=db.get('awesome_words');
+  const coll=db.get(current_session.collection);
   console.log(coll.find());
   coll.insert({
     "key": key,
@@ -27,7 +30,7 @@ var insertString= function(db, key,value, hash_string, callback){
 
 var searchString=function(db, search_string,  return_val, res,callback){
   current_session.key=search_string;
-  const coll=db.get('awesome_words');
+  const coll=db.get(current_session.collection);
   coll.find({
     "key":search_string
   }, "word").then((stuff_found)=>{
@@ -39,16 +42,15 @@ var searchString=function(db, search_string,  return_val, res,callback){
 
 //TODO: is callback really needed?
 var updateString=function(db, new_string, res, callback){
-  const coll=db.get('awesome_words');
+  const coll=db.get(current_session.collection);
   coll.update({key:current_session.key},{$set:{word:new_string}}).then(()=>{
     current_session.value=new_string;
     html_render({previous:""},res);
   });
-
 }
 
 //should return only names or the entire obj
-function get_collections(db, res,callback){
+function get_collections(res,callback){
   name_colls=[];
 
   MongoClient.connect(url,function(err, db){
@@ -62,21 +64,38 @@ function get_collections(db, res,callback){
     });
 
   });
+  callback();
 }
-
+function render_docs (res, docs){
+  console.log(docs);
+  html_render({}, res);
+}
+function all_documents(db,collection, res, callback){
+  const coll=db.get(collection);
+  coll.find().then((all_records)=>{
+    render_docs(res, all_records);
+  });
+  callback();
+}
 var html_render=function(bundle, res){
   res.render('crud',bundle);
 }
 
 router.get('/', function(req, res){
-    list_names=get_collections(req.db,res, function(){
-      // console.log("router: ", name_colls);
+    list_names=get_collections(res, function(){
+      console.log("called automatically");
       req.db.close();
-      // res.render('main', {collections:name_colls});
     });
-
 });
 
+router.post('/', function(req, res){
+  //get which collection was selected
+  current_session.collection=req.body.which_coll;
+  console.log(req.body.which_coll);
+  all_documents(req.db, req.body.which_coll, res, function(){
+    req.db.close();
+  });
+});
 router.post('/update', function(req,res){
   var new_word=req.body.found;
   updateString(req.db, new_word, res, function(){

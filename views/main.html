@@ -1,9 +1,9 @@
 <html>
   <body>
     <form action ="" method ="post">
-      <select style="max-width:90%;">
+      <select style="max-width:90%;" name="which_coll">
         {{#collections}}
-        <option>{{.}}</option>
+        <option value={{.}}>{{.}}</option>
         {{/collections}}
         <!-- <option>a</option>
         <option>b</option>
@@ -11,7 +11,7 @@
         <option>d</option> -->
 
       </select>
-      <input type="submit">
+      <button formaction ="/" type="submit">-></button>
     </form>
     <!--chose which collection and then load the
     contents of that page

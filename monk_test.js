@@ -7,12 +7,12 @@ const db = monk(url);
 
 const collection=db.get('awesome_words');
 
-// collection.find({'word':'pantene'}, 'hashed').then((stuff_found) => {
-//   console.log('Connected correctly to server');
-//   console.log(stuff_found[0]['hashed']);
-//
-// });
-collection.update({key:'Drug'},{$set:{word:'Modafinil'}}).then(()=>{
-  console.log('Successfully updated a value');
+collection.find().then((stuff_found) => {
+  console.log('Connected correctly to server');
+  console.log(stuff_found);
+
 });
+// collection.update({key:'Drug'},{$set:{word:'Modafinil'}}).then(()=>{
+//   console.log('Successfully updated a value');
+// });
 // .then(()=>db.close())

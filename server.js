@@ -24,10 +24,10 @@ app.use(function(req, res, next){
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
+//custom 404 stuff
 //traffic towards to the default address is directed to index
 app.use('/', routes);
 
-//custom 404 stuff
 app.use(function(req,res,next){
   var err=new Error('Ahhhhhhhhh! This page doesn\'t exist now...mah bad');
   err.status=404;

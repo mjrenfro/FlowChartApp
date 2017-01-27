@@ -70,11 +70,49 @@ function render_docs (res, docs){
   console.log(docs);
   html_render({}, res);
 }
-function all_documents(db,collection, res, callback){
-  const coll=db.get(collection);
-  coll.find().then((all_records)=>{
-    render_docs(res, all_records);
+//Could  not find a direct way to create a collection in the MongoDB driver
+function createCollection(collection){
+  collection.insertOne({a:1}, function(err, r){
+    assert.equal(null, err);
+    assert.equal(1,r.insertedCount);
   });
+  collection.deleteOne({a:1}, function (err, r){
+    assert.equal(null, err);
+    assert.equal(1,r.deletedCount);
+  });
+  // html_render({}, res);
+}
+
+function parse_docs(docs, res){
+  docs_bundle=[];
+  for (let d of docs){
+    console.log(d);
+    docs_bundle.push([d['key'], d['word']]);
+  }
+  html_render({documents:docs_bundle}, res);
+}
+
+function all_documents(db, res, callback){
+
+  MongoClient.connect(url, function(err, db){
+    assert.equal(null, err);
+    console.log("connected to the server");
+    const coll=db.collection(current_session.collection);
+    coll.find().toArray(function(err, docs){
+        assert.equal(null, err);
+        console.log("no errors with find...but are there docs???");
+        //new collection needs to be made
+        if (docs.length ==0){
+          createCollection(coll);
+
+        }
+        parse_docs(docs, res)
+        // console.log(docs);
+
+
+    });
+  });
+
   callback();
 }
 var html_render=function(bundle, res){
@@ -89,10 +127,10 @@ router.get('/', function(req, res){
 });
 
 router.post('/', function(req, res){
-  //get which collection was selected
-  current_session.collection=req.body.which_coll;
-  console.log(req.body.which_coll);
-  all_documents(req.db, req.body.which_coll, res, function(){
+  console.log("post");
+  current_session.collection = typeof req.body.name!="undefined" ? req.body.name :req.body.which_coll;
+  console.log(current_session.collection);
+  all_documents(req.db, res, function(){
     req.db.close();
   });
 });

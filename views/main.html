@@ -1,17 +1,27 @@
 <html>
   <body>
+    <h2>Choose a Collection</h2>
     <form action ="" method ="post">
-      <select style="max-width:90%;" name="which_coll">
-        {{#collections}}
-        <option value={{.}}>{{.}}</option>
-        {{/collections}}
-        <!-- <option>a</option>
-        <option>b</option>
-        <option>c</option>
-        <option>d</option> -->
+      <fieldset>
+        <select style="max-width:90%;" name="which_coll">
+          {{#collections}}
+          <option value={{.}}>{{.}}</option>
+          {{/collections}}
 
-      </select>
-      <button formaction ="/" type="submit">-></button>
+
+        </select>
+        <button formaction ="/" type="submit">-></button>
+      </fieldset>
+    </form>
+    <h2>Add a Collection</h2>
+    <form action="" method ="post">
+      <fieldset>
+        <label for "name">Name: </label>
+        <input type="text" name ="name" id ="name" placeholder=""/>
+        <br/>
+        <button formaction="/" type="submit">[.]->[...]</button>
+
+      </fieldset>
     </form>
     <!--chose which collection and then load the
     contents of that page

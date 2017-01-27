@@ -1,5 +1,14 @@
 <html>
   <body>
+    <h2>Contents</h2>
+    <!--makes things look nice-->
+    <fieldset>
+      <ul>
+        {{#documents}}
+        <li>{{.}}</li>
+        {{/documents}}
+      <ul>
+    </fieldset>
     <h2>Enter</h2>
     <form action="" method ="post">
       <fieldset>

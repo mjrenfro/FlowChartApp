@@ -1,4 +1,12 @@
-#FlowChartApp
+#nodeMyAdmin
+
+Simple administration tool written in node.js to manage databases in MongoDB.
+
+## ! In very early development stage ! ##
+
+### See what's to come [here](https://trello.com/b/Fsn54yaG/nodemyadmin) ###
+
+Feel free to add suggestions or identify issues in GitHub's Issues manager
 
 __*Simple Mongo Setup Reminder*__
 

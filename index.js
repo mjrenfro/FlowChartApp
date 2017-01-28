@@ -92,6 +92,12 @@ function parse_docs(docs, res){
   html_render({documents:docs_bundle}, res);
 }
 
+function deleteDocument(db, key_value, res,callback){
+
+  const coll = db.get(current_session.collection);
+  coll.remove({key:key_value});
+  all_documents(db, res, callback);
+}
 function all_documents(db, res, callback){
 
   MongoClient.connect(url, function(err, db){
@@ -140,6 +146,13 @@ router.post('/update', function(req,res){
     req.db.close();
   });
 
+});
+
+router.post('/delete', function(req, res){
+  var key=req.body.search_value;
+  deleteDocument(req.db, key, res, function(){
+    req.db.close();
+  });
 });
 
 router.post('/enter', function (req, res){

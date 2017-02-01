@@ -11,10 +11,12 @@ Feel free to add suggestions or identify issues in GitHub's Issues manager
 __*Simple Mongo Setup Reminder*__
 
 * Get Mongo server running
- * sudo mongod
+
+  'sudo mongod`
 
 * Shell Running
- * mongo
+
+  `mongo`
  
 __*Ending Mongod*__
 

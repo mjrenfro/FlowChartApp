@@ -12,7 +12,7 @@ __*Simple Mongo Setup Reminder*__
 
 * Get Mongo server running
 
-  'sudo mongod`
+  `sudo mongod`
 
 * Shell Running
 

@@ -30,7 +30,7 @@ __*Starting NodeJS App*__
 
 * node server.js
 
-* *If want a easy way to restart app after changes*
+*If want an easy way to restart app after changes*
 
 * `npm install nodemon`
 

@@ -15,6 +15,11 @@ __*Simple Mongo Setup Reminder*__
 
 * Shell Running
  * mongo
+__*Ending Mongod*__
+
+* In Mongo shell
+  `use admin`
+  `db.shutdownServer()`
 
 __*Starting NodeJS App*__
 

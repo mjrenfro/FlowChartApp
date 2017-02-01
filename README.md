@@ -12,19 +12,19 @@ __*Simple Mongo Setup Reminder*__
 
 * Get Mongo server running
 
-  `sudo mongod`
+ * `sudo mongod`
 
 * Shell Running
 
-  `mongo`
+ * `mongo`
  
 __*Ending Mongod*__
 
 * In Mongo shell
 
-  `use admin`
+ * `use admin`
   
-  `db.shutdownServer()`
+ * `db.shutdownServer()`
 
 __*Starting NodeJS App*__
 
@@ -32,6 +32,6 @@ __*Starting NodeJS App*__
 
 * *If want a easy way to restart app after changes*
 
-* npm install nodemon
+* `npm install nodemon`
 
-* nodemon server
+* `nodemon server`

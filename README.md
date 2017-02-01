@@ -15,6 +15,7 @@ __*Simple Mongo Setup Reminder*__
 
 * Shell Running
  * mongo
+ 
 __*Ending Mongod*__
 
 * In Mongo shell

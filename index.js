@@ -175,6 +175,27 @@ function deleteDocument(db, res,callback){
     all_documents(db, res, callback);
 
 }
+
+function delete_collection(res, req){
+  MongoClient.connect(url, function(err, db){
+    assert.equal(null, err);
+    db.collection(current_session.collection).drop();
+    current_session.collection=null;
+
+    get_dbs(res, function(){
+      console.log("end of function");
+
+    });
+    list_names=get_collections(res, function(){
+      console.log("called automatically");
+      req.db.close();
+    });
+
+
+  });
+
+
+}
 /*
   Query the current "session" (still need to implement sessions :( )
   and the update the contents panel, obviously with the contents of the collection
@@ -256,7 +277,9 @@ router.post('/delete', function(req, res){
     req.db.close();
   });
 });
-
+router.post('/delete_collection', function(req, res){
+  delete_collection(res, req);
+});
 router.post('/enter', function (req, res){
   current_session.key = req.body.key;
   current_session.value= req.body.value;

@@ -28,12 +28,12 @@ app.use(bodyParser.json());
 //traffic towards to the default address is directed to index
 app.use('/', routes);
 
-app.use(function(req,res,next){
-  var err=new Error('Ahhhhhhhhh! This page doesn\'t exist now...mah bad');
-  err.status=404;
-  //finds the next route handler
-  next(err);
-});
+// app.use(function(req,res,next){
+//   var err=new Error('Ahhhhhhhhh! This page doesn\'t exist now...mah bad');
+//   err.status=404;
+//   //finds the next route handler
+//   next(err);
+// });
 
 app.listen(1185);
 console.log("server listening on 1185");

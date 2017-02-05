@@ -4,7 +4,7 @@
     <button formaction="/" type="submit"><|--</button>
     </form>
     <form action ="" method="post">
-      <button formaction="/delete_collection" type="submit">Delete collection</button>
+      <button formaction="/" type="submit" name ="delete_coll">Delete collection</button>
     </form>
   <h2>{{collection_name}}</h2>
 
@@ -27,14 +27,6 @@
         <input type="text" id="value" name ="value" placeholder=""/>
         <br/>
         <button formaction="/enter" type="submit" onclick="update_hashed('something')">-->[...]</button>
-        <!-- <div id="hashed_stuff">
-          <br/>
-          <br/>
-          <label for "hashed">Hashed Value: </label>
-          <input style="width: 475px;"  readonly type="text"   name="hashed" value = {{hashed}}>
-        </div> -->
-
-
 
       </fieldset>
     </form>
@@ -58,29 +50,5 @@
 
 
     </form>
-  <!-- <script>
-    var hash="hashed_stuff";
-    var ret="retrieval_stuff";
-    (function(){
-      update_hashed("none");
-      update_retrieval("none");
-    })();
-    function update_hashed(display){
-
-      toggle_visibility(hash, display);
-    };
-    function update_retrieval(display){
-
-      toggle_visibility(ret, display);
-    };
-    //Got from SO
-    function toggle_visibility(eleID, display){
-      (function(style, display){
-        console.log(display);
-        style.display=display=== "something" ? "something" : "none";
-      })(document.getElementById(eleID).style, display);
-    };
-
-  </script> -->
   </body>
 </html>

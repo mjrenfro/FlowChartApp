@@ -19,33 +19,32 @@ var url='mongodb://localhost:27017/test';
 const crypto=require('crypto');
 
 
-function insertString(db,res,hash_string, callback){
+function insertString(db,res,hash_string){
   MongoClient.connect(url, function(err, db){
     assert.equal(null, err);
     db.collection(current_session.collection).insertOne({key:current_session.key,
       word:current_session.value, json: {key:current_session.key, word:current_session.value}}, function (err, r){
-
         assert.equal(null, err);
         assert.equal(1, r.insertedCount);
           all_documents(db, {},res);
         db.close();
       });
   });
-    callback();
 };
 
 function searchString(db,return_val, res,callback){
-  const coll=db.get(current_session.collection);
-  coll.find({
-    "key":current_session.key
-  }, "word").then((stuff_found)=>{
-      var found_value=stuff_found[0]["word"]
-      current_session.value=found_value;
-      bundle={previous:found_value};
-      all_documents(db, bundle, res);
-  });
-  callback();
-};
+  MongoClient.connect(url, function(err, db){
+      assert.equal(null, err);
+      const coll=db.collection(current_session.collection);
+      coll.findOne({key:current_session.key}, function(err,doc){
+        assert.equal(null, err);
+        current_session.value=doc.word;
+        bundle ={previous:doc.word};
+        all_documents(db, bundle, res);
+        callback();
+      });
+    });
+}
 
 var updateString=function(db, new_string, res, callback){
   const coll=db.get(current_session.collection);
@@ -81,7 +80,7 @@ function get_collections(res){
           name_colls.push(coll['name']);
       }
             db.close()
-            res.render('main', {collections:name_colls});
+            res.render('choose_coll', {collections:name_colls});
     });
 
   });
@@ -120,7 +119,6 @@ function deleteDocument(db, res,callback){
 
   });
     all_documents(db,{}, res);
-
 }
 
 function delete_collection(res, req){
@@ -147,21 +145,13 @@ function delete_collection(res, req){
         current_session.collection=null;
         get_dbs(res);
         list_names=get_collections(res);
-
-
     });
-
 
   });
 
-
 }
-/*
-  Query the current "session" (still need to implement sessions :( )
-  and the update the contents panel, obviously with the contents of the collection
- */
-function all_documents(db,bundle, res){
 
+function all_documents(db,bundle, res){
   MongoClient.connect(url, function(err, db){
     assert.equal(null, err);
     const coll=db.collection(current_session.collection);
@@ -176,23 +166,52 @@ function all_documents(db,bundle, res){
   });
 
 }
+//testing for bootstrap
+router.post('/test_bts', function(req, res){
+    res.render('test_fade_in');
+});
 router.get('/', function(req, res){
-    get_dbs(res);
-    list_names=get_collections(res);
+    // get_dbs(res);
+    // list_names=get_collections(res);
+    res.render('test_fade_in');
 });
 
-router.post('/', function(req, res){
-  console.log("delete_coll button: ", req.body.delete_coll);
-  if (req.body.delete_coll!=undefined){
+//abstract these two functs into something beter
+router.post('/add_coll', function(req, res){
+  current_session.collection=req.body.name;
+  all_documents(req.db, {}, res);
+});
+router.post('/choose_coll', function(req, res){
+  current_session.collection=req.body.which_coll;
+  all_documents(req.db, {}, res);
+});
 
-    console.log("in delete coll");
-    delete_collection(res, req);
+// router.post('/', function(req, res){
+//   //testing if in the examine collection
+//   //view the delete button is selected
+//   if (req.body.delete_coll!=undefined){
+//
+//     console.log("in delete coll");
+//     delete_collection(res, req);
+//   }
+//   else{
+//   current_session.collection = typeof req.body.name!="undefined" ? req.body.name :req.body.which_coll;
+//   all_documents(req.db, {},res);
+// }
+// });
+
+router.post('/', function(req, res){
+  if(req.body.delete_coll!=undefined)
+    delete_collection(res,req);
+
+  if (typeof req.body.choose!= 'undefined'){
+        get_collections(res);
   }
   else{
-  current_session.collection = typeof req.body.name!="undefined" ? req.body.name :req.body.which_coll;
-  console.log("else CS ", current_session.collection);
-  all_documents(req.db, {},res);
-}
+      res.render('add_coll');
+  }
+
+
 });
 
 router.post('/update', function(req,res){
@@ -212,27 +231,15 @@ router.post('/delete', function(req, res){
 router.post('/enter', function (req, res){
   current_session.key = req.body.key;
   current_session.value= req.body.value;
-
   const hash=crypto.createHmac('sha256', req.body.value).digest('hex');
-
-  insertString(req.db,res,hash, function(){
-    req.db.close();
-  });
+  insertString(req.db,res,hash);
 
 });
 
-//TODO: maybe figure out how to save documents in cache
-//so that the MongoDB db doesn't have to queried only on a search...
-//Isn't there like a REST solution to this?
-//Route for searching for a specific string in DB
 router.post('/search', function(req, res){
   current_session.key=req.body.search_value;
   var return_val=[];
-
-  //unsure how to return the found value, so everything
-  //is just going to be handled in this funct
   searchString(req.db,return_val, res, function(){
-    //TODO: is this necessary?
     req.db.close();
   });
 

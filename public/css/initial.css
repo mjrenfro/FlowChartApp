@@ -1,0 +1,40 @@
+html {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  min-width: 100%;
+  min-height: 100%;
+}
+
+body {
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+.no-border{
+  padding:40;
+  border:none;
+  background: none;
+  font-size:60px;
+  outline: 3px solid black;
+  display:block;
+}
+button {
+    margin:30;
+    display:block;
+}
+.centering {
+  float:none;
+  margin:0 auto;
+  width:50%;
+}
+.row-fluid {height: 100%; display:table-cell; vertical-align: middle;}
+
+.container-fluid{
+  height:100%;
+  display:table;
+  width: 100%;
+  padding: 0;
+}

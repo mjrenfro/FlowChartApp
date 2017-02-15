@@ -1,0 +1,32 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Testing Require Bootstrap</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/initial.css">
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <form action="/add_coll" method="post" class ="centering text-center form-inline">
+          <label for "name" class="centering"><h1 style="font-size:60px;color:black">Name: </h1></label>
+          <input type="text" name="name" class="big no-border centering" style="height:70px;" onkeyup="checkSubmit(event)"/>
+        </form>
+      </div>
+    </div>
+    <script
+      src="https://code.jquery.com/jquery-3.1.1.min.js"
+      integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+      crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+    <script>
+      function checkSubmit(e){
+        if (e && e.keyCode==13){
+          console.log("should be submitting the form");
+          document.forms[0].submit();
+        }
+      }
+    </script>
+  </body>
+</html>
